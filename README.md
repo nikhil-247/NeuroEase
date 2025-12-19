@@ -1,2 +1,11 @@
-# NeuroEase
-An AI-based platform that helps re-construct important life memories based on the information provided by caregivers, and then turns them into audio-based memory sessions that the patient can listen to everyday.
+
+  # NeuroEase Healthcare App Prototype
+
+  This is a code bundle for NeuroEase Healthcare App Prototype. The original project is available at https://www.figma.com/design/nMYA6T5U9ydbgPEwqTJQRN/NeuroEase-Healthcare-App-Prototype.
+
+  ## Running the code
+
+  Run `npm i` to install the dependencies.
+
+  Run `npm run dev` to start the development server.
+  
