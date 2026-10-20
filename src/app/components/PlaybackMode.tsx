@@ -1,95 +1,84 @@
-import React from 'react';
+import { Bluetooth, Pause, Play, SkipForward, Volume2 } from 'lucide-react';
 import { Button } from './ui/button';
+import { Card } from './ui/card';
 import { mockSessions } from '../data/mockData';
-import { Play, Pause, SkipForward, Volume2, Bluetooth } from 'lucide-react';
 
 export function PlaybackMode() {
-  const [isPlaying, setIsPlaying] = React.useState(false);
+  const currentSession = mockSessions[0];
+  const nextSession = mockSessions[1];
 
   return (
     <div className="min-h-[calc(100vh-8rem)] bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/10 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full space-y-8">
-        {/* Now Playing */}
         <div className="text-center space-y-4">
           <div className="inline-block px-4 py-1 bg-accent text-accent-foreground rounded-full text-sm">
-            Now Playing
+            Playback UI Preview
           </div>
-          <h1 className="text-4xl font-semibold">{mockSessions[0].title}</h1>
-          <p className="text-muted-foreground text-lg">{mockSessions[0].type} · {mockSessions[0].duration}</p>
+          <h1 className="text-4xl font-semibold">{currentSession.title}</h1>
+          <p className="text-muted-foreground text-lg">{currentSession.type} · {currentSession.duration}</p>
+          <p className="text-sm text-muted-foreground">
+            Demo only: the repository has no audio file or connected playback service.
+          </p>
         </div>
 
-        {/* Large Playback Controls */}
-        <div className="bg-card border border-border rounded-3xl p-12 space-y-8">
-          {/* Progress Bar */}
-          <div className="space-y-2">
-            <div className="h-3 bg-muted rounded-full overflow-hidden">
-              <div className="h-full bg-primary w-1/3 transition-all"></div>
+        <Card>
+          <div className="p-6 sm:p-10 space-y-8">
+            <div className="space-y-2" aria-label="Audio progress preview">
+              <div className="h-3 bg-muted rounded-full overflow-hidden">
+                <div className="h-full bg-primary w-0" />
+              </div>
+              <div className="flex justify-between text-sm text-muted-foreground">
+                <span>—:—</span>
+                <span>{currentSession.duration}</span>
+              </div>
             </div>
-            <div className="flex justify-between text-sm text-muted-foreground">
-              <span>1:24</span>
-              <span>{mockSessions[0].duration}</span>
+
+            <div className="flex items-center justify-center gap-4 sm:gap-6">
+              <Button type="button" size="lg" variant="outline" className="h-14 w-14 rounded-full" disabled title="Audio source not configured">
+                <SkipForward className="h-5 w-5 rotate-180" aria-hidden="true" />
+              </Button>
+              <Button type="button" size="lg" className="h-20 w-20 rounded-full" disabled title="Audio source not configured">
+                <Play className="h-8 w-8" aria-hidden="true" />
+                <Pause className="hidden" aria-hidden="true" />
+              </Button>
+              <Button type="button" size="lg" variant="outline" className="h-14 w-14 rounded-full" disabled title="Audio source not configured">
+                <SkipForward className="h-5 w-5" aria-hidden="true" />
+              </Button>
             </div>
-          </div>
 
-          {/* Control Buttons */}
-          <div className="flex items-center justify-center gap-6">
-            <Button size="lg" variant="outline" className="h-16 w-16 rounded-full">
-              <SkipForward className="h-6 w-6 rotate-180" />
-            </Button>
-            
-            <Button
-              size="lg"
-              className="h-24 w-24 rounded-full bg-primary hover:bg-primary/90"
-              onClick={() => setIsPlaying(!isPlaying)}
-            >
-              {isPlaying ? (
-                <Pause className="h-10 w-10" />
-              ) : (
-                <Play className="h-10 w-10 ml-1" />
-              )}
-            </Button>
-            
-            <Button size="lg" variant="outline" className="h-16 w-16 rounded-full">
-              <SkipForward className="h-6 w-6" />
-            </Button>
-          </div>
-
-          {/* Volume Control */}
-          <div className="flex items-center gap-4">
-            <Volume2 className="h-5 w-5 text-muted-foreground" />
-            <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-              <div className="h-full bg-primary w-2/3"></div>
+            <div className="flex items-center gap-4 text-muted-foreground">
+              <Volume2 className="h-5 w-5" aria-hidden="true" />
+              <div className="flex-1 h-2 bg-muted rounded-full" />
+              <span className="text-xs">Unavailable</span>
             </div>
           </div>
-        </div>
+        </Card>
 
-        {/* Next Session */}
-        <div className="bg-secondary/50 border border-border rounded-2xl p-6">
-          <div className="flex items-center justify-between">
+        <Card>
+          <div className="p-6 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <div className="text-sm text-muted-foreground mb-1">Next Session</div>
-              <div className="font-medium">{mockSessions[1].title}</div>
+              <div className="text-sm text-muted-foreground mb-1">Next sample session</div>
+              <div className="font-medium">{nextSession?.title ?? 'No next session'}</div>
             </div>
-            <Button variant="outline" size="sm">
-              <Play className="h-4 w-4 mr-2" />
-              Play Next
+            <Button type="button" variant="outline" size="sm" disabled title="Audio playback is not implemented">
+              <Play className="h-4 w-4 mr-2" aria-hidden="true" />
+              Audio unavailable
             </Button>
           </div>
-        </div>
+        </Card>
 
-        {/* Device Connection */}
-        <div className="bg-card border border-border rounded-2xl p-6">
-          <div className="flex items-center gap-4">
-            <Bluetooth className="h-6 w-6 text-primary" />
+        <Card>
+          <div className="p-6 flex items-center gap-4">
+            <Bluetooth className="h-6 w-6 text-muted-foreground" aria-hidden="true" />
             <div className="flex-1">
-              <div className="font-medium">Connected to Bedroom Speaker</div>
-              <div className="text-sm text-muted-foreground">Amazon Echo Dot</div>
+              <div className="font-medium">No device connected</div>
+              <div className="text-sm text-muted-foreground">Bluetooth speaker integration is not implemented in this prototype.</div>
             </div>
-            <Button variant="outline" size="sm">
+            <Button type="button" variant="outline" size="sm" disabled title="Device pairing is not implemented">
               Change
             </Button>
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );
