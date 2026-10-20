@@ -1,4 +1,4 @@
-import { Bluetooth, Pause, Play, SkipForward, Volume2 } from 'lucide-react';
+import { Bluetooth, Play, SkipForward, Volume2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { mockSessions } from '../data/mockData';
@@ -39,7 +39,6 @@ export function PlaybackMode() {
               </Button>
               <Button type="button" size="lg" className="h-20 w-20 rounded-full" disabled title="Audio source not configured">
                 <Play className="h-8 w-8" aria-hidden="true" />
-                <Pause className="hidden" aria-hidden="true" />
               </Button>
               <Button type="button" size="lg" variant="outline" className="h-14 w-14 rounded-full" disabled title="Audio source not configured">
                 <SkipForward className="h-5 w-5" aria-hidden="true" />
